@@ -7,18 +7,19 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="{% url 'polls:index' %}">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="{% url 'polls:index' %}">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Add</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
+          <a class="nav-link" href="{% url 'polls:add' %}">Add</a>
         </li>
       </ul>
       <span class="navbar-text">
-        Navbar text with an inline element
       </span>
     </div>
   </nav>
+  {% if message %}
+    <div class="alert alert-success" role="alert">
+      message
+    </div>
+  {% endif %}
   {% endblock navbar %}
