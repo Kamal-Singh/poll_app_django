@@ -31,16 +31,21 @@ def vote(request, question_id):
     else:
         selected_choice.votes += 1
         selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
-def add(request):
+def add(request,message):
     context = {}
-    # if(request.message)
-    #     context.message = request.message
+    if message:
+        context.message = message
     return render(request, 'polls/add.html', context)
 
 def new(request):
-    
+    if request.method == 'POST':
+        question = request.POST.get('question')
+        choice1 = request.POST.get('choice1')
+        choice2 = request.POST.get('choice2')
+        choice3 = request.POST.get('choice3')
+        choice4 = request.POST.get('choice4')
+        # question_object = Question.objects.create('')
+    return HttpResponseRedirect(reverse('polls:add'))
+        

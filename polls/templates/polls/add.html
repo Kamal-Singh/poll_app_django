@@ -1,26 +1,27 @@
 {% extends 'polls/base.html' %}
 {% block content %}
 <div class="container justify-content-center" >   
-    <form action="#" method="post">
+    <form action="{% url 'polls:new' %}" method="post">
+        {% csrf_token %}
         <div class="form-group">
             <label for="question">Question</label>
-            <input type="text" class="form-control" id="question">
+            <input name="question" type="text" class="form-control" id="question">
         </div>
         <div class="form-group">
             <label for="choice1">choice 1</label>
-            <input type="text" class="form-control" id="choice1">
+            <input name="choice1" type="text" class="form-control" id="choice1">
         </div>
         <div class="form-group">
             <label for="choice2">choice 2</label>
-            <input type="text" class="form-control" id="choice2">
+            <input name="choice2" type="text" class="form-control" id="choice2">
         </div>
         <div class="form-group">
             <label for="choice3">choice 3</label>
-            <input type="text" class="form-control" id="choice3">
+            <input name="choice3" type="text" class="form-control" id="choice3">
         </div>
         <div class="form-group">
             <label for="choice4">choice 4</label>
-            <input type="text" class="form-control" id="choice4">
+            <input name="choice4" type="text" class="form-control" id="choice4">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
