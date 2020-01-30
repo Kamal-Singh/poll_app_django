@@ -2,6 +2,8 @@ from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from .models import Question, Choice 
+from django.utils import timezone
+from django.contrib import messages
 
 def index(request):
     latest_question_list = Question.objects.order_by('-pub_date')[:5]
@@ -33,19 +35,26 @@ def vote(request, question_id):
         selected_choice.save()
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
-def add(request,message):
+def add(request):
     context = {}
-    if message:
-        context.message = message
     return render(request, 'polls/add.html', context)
 
 def new(request):
+    tmp = ""
     if request.method == 'POST':
         question = request.POST.get('question')
         choice1 = request.POST.get('choice1')
         choice2 = request.POST.get('choice2')
         choice3 = request.POST.get('choice3')
         choice4 = request.POST.get('choice4')
-        # question_object = Question.objects.create('')
+        question_object = Question.objects.create(question_text=question,pub_date=timezone.now())
+        question_object.choice_set.create(choice_text=choice1,votes=0)
+        question_object.choice_set.create(choice_text=choice2,votes=0)
+        question_object.choice_set.create(choice_text=choice3,votes=0)
+        question_object.choice_set.create(choice_text=choice4,votes=0)
+        tmp = "Poll Created Successfully!!"
+    else:
+        tmp = "Some Error Occured!!"
+    messages.add_message(request,messages.INFO,tmp)
     return HttpResponseRedirect(reverse('polls:add'))
         
